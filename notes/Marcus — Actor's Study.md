@@ -216,43 +216,24 @@ What it buys the part for free:
 
 Sorted by route rather than by category: what to fix directly in the editor, what to send as a PR, and what to raise as a comment.
 
-### 5a — Fix directly (real misspellings only)
+### 5a — Spelling and typos — **applied**
 
-This is a spoken script, so US-vs-Australian spelling is not a defect and isn't listed here. What follows is only words that are misspelled in any dialect. I swept the whole script, not just his part, since these are the ones that need nobody's agreement.
+All of these are fixed on the **`edits/spelling-typos`** branch, as the single commit `7e8416a`. That branch is cut from `cleanup/editor-presenter` and touches only `stage/show.json`, so it opens as a clean one-commit PR. This branch carries these notes and nothing else — the two never mix. Kept here as the record of what changed.
 
-**In Marcus's lines:**
+Fourteen real misspellings — wrong in any dialect. US-vs-Australian spelling is not listed anywhere in this document: it's a spoken script, so it can't be heard.
 
-| Cue | Misspelling | Fix |
-|---|---|---|
-| `s11b_l8` | "I'm telling you to **reconize** reality" | recognise / recognize |
-| `s11b_l10` | "push out more and more **crapy** features" | crappy |
-| `s14a_l28` | "happy crafting of shirts or whateverthefuck **dissapeared**" | disappeared |
-| `s23b_l14` | "a better version Luigi **Manggioni**" | Mangione |
+**In Marcus's lines:** `s11b_l8` reconize → recognise · `s11b_l10` crapy → crappy · `s14a_l28` dissapeared → disappeared · `s23b_l14` Manggioni → Mangione.
 
-**Elsewhere in the script**, while you're in there:
+**Elsewhere:** `s01_l2` effeciently (Kristina) · `s11b_l4` simialrly (Kristina) · `s06_l21` immedietly (SJ) · `s19_l8` togehter (SJ) · `s23b_l15` electicity (SJ) · `s20_l56` grogy (narrator) · `s01b_narrator_promotion` acheive (narrator) · `s23_l16` judget (stage direction) · `s06_l25` outloud → out loud (stage direction) · `cue_8b356c29…` "Dissapointed and slightly embarrased" (direction field).
 
-| Cue | Speaker | Misspelling | Fix |
-|---|---|---|---|
-| `s01_l2` | Kristina | "get through standup more **effeciently**" | efficiently |
-| `s11b_l4` | Kristina | "three **simialrly** scoped tickets" | similarly |
-| `s06_l21` | SJ | "we stop counting tickets and fix it **immedietly**" | immediately |
-| `s19_l8` | SJ | "how quick that came **togehter**" | together |
-| `s23b_l15` | SJ | "frustrated their **electicity** doesn't work" | electricity |
-| `s20_l56` | narrator | "He's **grogy** but he slowly remembers" | groggy |
-| `s01b_narrator_promotion` | narrator | "to finally allow her team to **acheive** their quarterly targets" | achieve |
-| `s23_l16` | stage direction | "The **judget** looks annoyed" | judge |
-| `s06_l25` | stage direction | "He hears himself say what he said **outloud**" | out loud |
-| `cue_8b356c29…` | direction field | "**Dissapointed** and slightly **embarrased**" | Disappointed, embarrassed |
+Seven more that aren't spelling but are unambiguously broken: a lowercase "i" in `s11b_l8`, a missing "of" in `s23b_l14`, a missing "the" in `s23b_l4`, a run-on sentence in `cue_f611e67…`, a lowercase "it's" after an exclamation mark in `s14a_l30`, and missing hyphens in "single handedly" and "over eager" in `cue_89978fb…`.
 
-> [!warning] Fixing spoken text invalidates that line's recording
-> `audioManifestRequired` is `true` and `stage/generated-voices.json` stores the exact text for all 860 recorded cues, so per the README "editing a spoken line makes its old recording ineligible for playback." Every spoken line above has a recording. What that costs depends on the role:
+> [!note] Regeneration cost: six lines, not fourteen
+> Editing spoken text makes that cue's recording ineligible, but most of these cues were **already** stale. The manifest in `stage/generated-voices.json` is from `author-pass-2026-09-12`, and the cleanup branch's SJ rename rewrote 150 cues, so 157 cues across the script already read "needs generation" before any of this.
 >
-> - **Marcus's four are effectively free** — he's a live role, so a lost recording doesn't affect performance.
-> - **SJ's three are also fine** — also live.
-> - **Kristina's two and the narrator's two are not free.** Those roles play back recorded, so fixing the spelling silently drops the audio until someone regenerates it, which needs an ElevenLabs key and paid credits (`tools/generate_elevenlabs.py`). Worth mentioning in the commit message, or bundling them so one regeneration run covers the lot.
-> - **The three directions cost nothing** — directions aren't spoken text, so editing them can't invalidate a recording.
-
-**Not spelling, so listed separately — unambiguously broken, but your call whether they belong in the same commit:** `s11b_l8` has a lowercase "Do you think **i** enjoy this either?"; `s23b_l14` is missing a word ("a better version **of** Luigi"); `s23b_l4` is missing one too ("the mistakes **of past**"); `cue_f611e67…` runs two sentences together ("the company will collapse or whatever **You're** trying to beat"); `s14a_l30` has a lowercase "it's" after an exclamation mark; `cue_89978fb…` wants hyphens in "single handedly" and "over eager".
+> Of the 18 cues changed here, 10 were already stale and 2 are silent stage cues. Only **six** went from "ready" to "needs generation": `s11b_l4` (Kristina), `s19_l8` and `s23b_l15` (SJ), `s20_l56` and `s01b_narrator_promotion` (narrator), and `s23b_l4` (Marcus). Script-wide the count moved 566 → 560 ready.
+>
+> Worth knowing: **all four of Marcus's misspellings were already stale**, so fixing them cost nothing at all.
 
 ### 5b — PR it (wording swaps: a word changes, the meaning doesn't)
 
