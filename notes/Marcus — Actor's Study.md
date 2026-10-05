@@ -216,21 +216,43 @@ What it buys the part for free:
 
 Sorted by route rather than by category: what to fix directly in the editor, what to send as a PR, and what to raise as a comment.
 
-### 5a — Fix directly (spelling and punctuation, no judgement needed)
+### 5a — Fix directly (real misspellings only)
 
-| Cue | Problem | Fix |
+This is a spoken script, so US-vs-Australian spelling is not a defect and isn't listed here. What follows is only words that are misspelled in any dialect. I swept the whole script, not just his part, since these are the ones that need nobody's agreement.
+
+**In Marcus's lines:**
+
+| Cue | Misspelling | Fix |
 |---|---|---|
-| `s11b_l8` | "I'm telling you to **reconize** reality, SJ. Do you think **i** enjoy this either?" | "recognise", capital "I" |
-| `s11b_l10` | "push out more and more **crapy** features" | "crappy" |
-| `s14a_l28` | "happy crafting of shirts or whateverthefuck **dissapeared**" | "disappeared" |
-| `s14a_l14` | "I mean no **offense**" | "offence" — and the script already has "hanging **offence**" at s23_l24, so this is an internal inconsistency, not a dialect call |
-| `s23b_l4` | "we won't repeat the mistakes **of past**" | "of the past" |
-| `s23b_l14` | "a better **version Luigi Manggioni**" | "a better version **of** Luigi **Mangione**" |
-| `cue_f611e67…` | "the company will collapse or whatever **You're** trying to beat" | full stop after "whatever" |
-| `s14a_l30` | "It's not the weaving thing! **it's** your thing" | capital "It's" |
-| `s11b_l17` | "I merged **3** PRs yesterday" | "three" — the rest of the script spells numbers out |
+| `s11b_l8` | "I'm telling you to **reconize** reality" | recognise / recognize |
+| `s11b_l10` | "push out more and more **crapy** features" | crappy |
+| `s14a_l28` | "happy crafting of shirts or whateverthefuck **dissapeared**" | disappeared |
+| `s23b_l14` | "a better version Luigi **Manggioni**" | Mangione |
 
-Two outside his part, same bucket, both in SJ's mouth next to him: `s23b_l15` has "**electicity**", and `s23_l33` has the prosecutor reading "**utilizing** rogue AI models" — which Marcus wrote, so it should be "utilising" if the text is ever shown on screen. Leave the bloated word itself; survey-speak is the joke.
+**Elsewhere in the script**, while you're in there:
+
+| Cue | Speaker | Misspelling | Fix |
+|---|---|---|---|
+| `s01_l2` | Kristina | "get through standup more **effeciently**" | efficiently |
+| `s11b_l4` | Kristina | "three **simialrly** scoped tickets" | similarly |
+| `s06_l21` | SJ | "we stop counting tickets and fix it **immedietly**" | immediately |
+| `s19_l8` | SJ | "how quick that came **togehter**" | together |
+| `s23b_l15` | SJ | "frustrated their **electicity** doesn't work" | electricity |
+| `s20_l56` | narrator | "He's **grogy** but he slowly remembers" | groggy |
+| `s01b_narrator_promotion` | narrator | "to finally allow her team to **acheive** their quarterly targets" | achieve |
+| `s23_l16` | stage direction | "The **judget** looks annoyed" | judge |
+| `s06_l25` | stage direction | "He hears himself say what he said **outloud**" | out loud |
+| `cue_8b356c29…` | direction field | "**Dissapointed** and slightly **embarrased**" | Disappointed, embarrassed |
+
+> [!warning] Fixing spoken text invalidates that line's recording
+> `audioManifestRequired` is `true` and `stage/generated-voices.json` stores the exact text for all 860 recorded cues, so per the README "editing a spoken line makes its old recording ineligible for playback." Every spoken line above has a recording. What that costs depends on the role:
+>
+> - **Marcus's four are effectively free** — he's a live role, so a lost recording doesn't affect performance.
+> - **SJ's three are also fine** — also live.
+> - **Kristina's two and the narrator's two are not free.** Those roles play back recorded, so fixing the spelling silently drops the audio until someone regenerates it, which needs an ElevenLabs key and paid credits (`tools/generate_elevenlabs.py`). Worth mentioning in the commit message, or bundling them so one regeneration run covers the lot.
+> - **The three directions cost nothing** — directions aren't spoken text, so editing them can't invalidate a recording.
+
+**Not spelling, so listed separately — unambiguously broken, but your call whether they belong in the same commit:** `s11b_l8` has a lowercase "Do you think **i** enjoy this either?"; `s23b_l14` is missing a word ("a better version **of** Luigi"); `s23b_l4` is missing one too ("the mistakes **of past**"); `cue_f611e67…` runs two sentences together ("the company will collapse or whatever **You're** trying to beat"); `s14a_l30` has a lowercase "it's" after an exclamation mark; `cue_89978fb…` wants hyphens in "single handedly" and "over eager".
 
 ### 5b — PR it (wording swaps: a word changes, the meaning doesn't)
 
@@ -262,7 +284,7 @@ Two outside his part, same bucket, both in SJ's mouth next to him: `s23b_l15` ha
 | Cue | Line | Note |
 |---|---|---|
 | `s14a_l45` | "Send me your **CV**" | Not "résumé". |
-| `s23_l24` | "a hanging **offence**" | Keep the spelling and the construction. |
+| `s23_l24` | "a hanging **offence**" | Keep the construction. |
 | `s23b_l16` | "The **share price** went up after the statement, I checked." | Not "stock price". |
 | `s23b_l23` | "**I'm not being funny about it.**" | Doesn't exist in American English, and it's the phrase the old brief gave him for the cut peer-review scene. It survived into this cut here. Keep exactly. |
 | `s11b_l36` | "**With respect**, it often seems like…" | The politest possible way to start an accusation. |
