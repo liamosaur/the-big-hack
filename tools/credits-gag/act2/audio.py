@@ -43,7 +43,10 @@ def resample(data, rate):
 buf = array('d', bytes(8 * int((duration + 1) * SR)))
 last = -1
 for ev in sched['events']:
-    if ev['kind'] == 'mouse':
+    if ev['kind'] == 'esc':
+        # the same physical key, so the same sample at the same pitch and level
+        data, rate, gain = keys[7 % len(keys)], 0.95, 1.05
+    elif ev['kind'] == 'mouse':
         data, gain = mouse, 0.85 * rng.uniform(0.9, 1.1)
         rate = rng.uniform(0.96, 1.05)
     else:

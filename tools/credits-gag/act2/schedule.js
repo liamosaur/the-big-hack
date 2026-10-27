@@ -50,7 +50,7 @@ const type = weights.map((w, i) => ({ t: +(M.typeStart + (acc += w * scale)).toF
 
 const events = [
   { t: M.copy1, kind: 'key' },                                        // ctrl-c, once
-  { t: M.esc1, kind: 'key' }, ...M.escMany.map(t => ({ t, kind: 'key' })),
+  { t: M.esc1, kind: 'esc' }, ...M.escMany.map(t => ({ t, kind: 'esc' })),
   { t: M.modelOpen, kind: 'mouse' }, { t: M.modelPick, kind: 'mouse' },
   { t: M.effortOpen, kind: 'mouse' }, { t: M.effortPick, kind: 'mouse' },
   { t: M.boxClick, kind: 'mouse' },

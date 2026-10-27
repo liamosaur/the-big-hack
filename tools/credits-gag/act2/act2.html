@@ -46,7 +46,6 @@ html,body{width:640px;height:360px;overflow:hidden;background:#000;
 #px .think{color:#3f7a5e;font-size:12.5px;margin-bottom:6px;font-family:"Liberation Mono",monospace}
 #px .out{font:14px/1.5 "Liberation Mono",monospace;color:#2fe07a;letter-spacing:.3px;text-shadow:0 0 9px rgba(47,224,122,.4)}
 #px .out div{margin-bottom:3px}
-#px .alarm{color:#ff4455;text-shadow:0 0 10px rgba(255,68,85,.45)}
 #px .comp{position:absolute;left:22px;right:22px;bottom:30px;height:52px;border:1px solid #1d4234;border-radius:12px;
   background:#091511;padding:14px 56px 14px 16px;font-size:13.5px;color:#cdf5e0;overflow:hidden;white-space:nowrap}
 #px .comp.dead{background:#070c0a;border-color:#15241e;color:#2c4a3c}
@@ -105,7 +104,7 @@ const inBox = (b, p) => p && p[0] >= b.x0 && p[0] <= b.x1 && p[1] >= b.y0 && p[1
 const MENU = { top: 36, pad: 4, row: 22 };
 const MODEL_MENU_X = 372, EFFORT_MENU_X = 520;
 const rowY = i => MENU.top + MENU.pad + i * MENU.row + MENU.row / 2;
-const BOX = [200, 300], SEND = [597, 301];
+const BOX = [168, 292], BOX2 = [243, 307], SEND = [601, 296];
 
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function hash(n){ const h = Math.sin(n * 127.1) * 43758.5453; return h - Math.floor(h); }
@@ -145,12 +144,12 @@ const PATH = [
   [M.mouseIn - 0.1, 700, 400], [M.mouseIn + 0.7, 300, 140], [M.selStart, 76, 51],
   [M.selStart + 0.5, 585, 51], [M.selEnd, 266, 71], [M.copy2 + 0.3, 266, 71],
   [M.switch + 0.1, 300, 190],
-  [M.modelOpen - 0.1, MODEL_MENU_X + 70, 18], [M.modelPick - 0.1, MODEL_MENU_X + 70, rowY(PICK)],
-  [M.effortOpen - 0.1, EFFORT_MENU_X + 46, 18], [M.effortPick - 0.1, EFFORT_MENU_X + 46, rowY(3)],
+  [M.modelOpen - 0.1, MODEL_MENU_X + 58, 16], [M.modelPick - 0.1, MODEL_MENU_X + 44, rowY(PICK) + 4],
+  [M.effortOpen - 0.1, EFFORT_MENU_X + 52, 19], [M.effortPick - 0.1, EFFORT_MENU_X + 30, rowY(3) - 5],
   [M.boxClick - 0.1, BOX[0], BOX[1]], [M.submit, BOX[0], BOX[1]],
   // hidden while it runs, then back for the stop button
   [M.stopHover - 0.9, 330, 180], [M.stopHover, SEND[0], SEND[1]], [M.stopClicks[2] + 0.25, SEND[0], SEND[1]],
-  [M.box2Click - 0.1, BOX[0], BOX[1]], [M.enter2 + 0.3, BOX[0], BOX[1]],
+  [M.box2Click - 0.1, BOX2[0], BOX2[1]], [M.enter2 + 0.3, BOX2[0], BOX2[1]],
 ];
 function shake(t){
   // side to side, skipping in steps, the way a hand jerks a mouse
@@ -158,15 +157,23 @@ function shake(t){
   const r = h - Math.floor(h), r2 = (h * 3.7) - Math.floor(h * 3.7);
   return [320 + (n % 2 ? 1 : -1) * (120 + r * 150), 288 + (r2 - 0.5) * 34];
 }
+function reach(u, far){
+  // fast away, braking into the target; a long throw overshoots and settles
+  const v = 1 - Math.pow(1 - u, 2.6);
+  return far ? v + 0.45 * Math.pow(u - 1, 3) + 0.45 * Math.pow(u - 1, 2) : v;
+}
 function pointer(t){
   if (t >= M.panicStart && t < M.flicker) return shake(t);
   if (t < PATH[0][0]) return null;
   for (let i = PATH.length - 1; i >= 0; i--) {
     if (t >= PATH[i][0]) {
-      const b = PATH[i + 1];
-      if (!b) return [PATH[i][1], PATH[i][2]];
-      const u = ease((t - PATH[i][0]) / (b[0] - PATH[i][0]));
-      return [PATH[i][1] + (b[1] - PATH[i][1]) * u, PATH[i][2] + (b[2] - PATH[i][2]) * u];
+      const a = PATH[i], b = PATH[i + 1];
+      if (!b) return [a[1], a[2]];
+      const d = Math.hypot(b[1] - a[1], b[2] - a[2]);
+      const u = reach(Math.min(1, (t - a[0]) / (b[0] - a[0])), d > 150);
+      // a resting hand is never quite still
+      const w = d < 2 ? [Math.sin(t * 2.7) * 0.7, Math.cos(t * 2.1) * 0.5] : [0, 0];
+      return [a[1] + (b[1] - a[1]) * u + w[0], a[2] + (b[2] - a[2]) * u + w[1]];
     }
   }
   return null;
@@ -219,7 +226,7 @@ function harness(t, p){
   [[M.p0, PHASES[0]], [M.p1, PHASES[1]], [M.p2, PHASES[2]]].forEach(([at, text]) => {
     if (t >= at) out += `<div>${chars(text, t, at, 60)}</div>`;
   });
-  if (t >= M.disrupt) out += `<div class=alarm>${chars(DISRUPT, t, M.disrupt, 70)}</div>`;
+  if (t >= M.disrupt) out += `<div>${chars(DISRUPT, t, M.disrupt, 70)}</div>`;
   if (t >= M.p3) out += `<div>${chars(PHASE3, t, M.p3, 60)}</div>`;
   if (out) body += `<div class=out>${out}</div>`;
   if (t >= M.think && t < M.flicker && !streaming(t)) {
