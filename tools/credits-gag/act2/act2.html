@@ -23,6 +23,7 @@ html,body{width:640px;height:360px;overflow:hidden;background:#000;
 #cc .det code{font-family:"Liberation Mono",monospace;color:#b9b6ae}
 #cc .comp{position:absolute;left:12px;right:12px;bottom:30px;height:58px;border:1px solid #3a3a37;border-radius:14px;background:#1f1f1e;padding:8px 12px;font-size:14px}
 #cc .ph{color:#77746d}
+#cc .comp .plus{position:absolute;left:12px;bottom:6px;color:#b9b6ae;font-size:18px}
 #cc .bar{position:absolute;left:14px;right:14px;bottom:6px;display:flex;justify-content:space-between;color:#c9c6be;font-size:12px}
 .caret{display:inline-block;width:1.5px;height:14px;background:#f2f1ee;vertical-align:-2px}
 .caret.off{background:transparent}
@@ -198,8 +199,8 @@ function claudeCode(t, p){
       <div class=notice>Claude Code notice ›</div>
       <div class=card><p>${esc(NOTICE)}</p><div class=det>Details: <code>[cyber]</code></div></div>
     </div></div>
-    <div class=comp>${caret}<span class=ph style="margin-left:5px">Type / for commands</span></div>
-    <div class=bar><span>Auto</span><span>Opus 5.5&nbsp; High &nbsp;◯</span></div>`;
+    <div class=comp><span class=plus>+</span>${caret}<span class=ph style="margin-left:5px">Type / for commands</span></div>
+    <div class=bar><span>Auto</span><span>Opus 5.5&nbsp; High &nbsp;<span style="color:#8d8a83">◯</span></span></div>`;
 }
 
 function harness(t, p){
