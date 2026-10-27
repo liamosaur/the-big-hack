@@ -8,20 +8,22 @@ fs.mkdirSync(OUT, { recursive: true });
 const M = {
   mouseIn: 2.0,                      // pointer arrives over the refusal
   selStart: 3.0, selEnd: 3.8,        // drag-select the prompt
-  copy1: 4.2, copy2: 4.7,            // ctrl-c, twice
+  copy1: 4.2, copy2: 4.6,            // one quick ctrl-c
   switch: 5.3,                       // different harness
   modelOpen: 6.3, modelPick: 7.3,    // choose MODEL PLACEHOLDER
   effortOpen: 8.2, effortPick: 9.2,  // set Effort to Max
   boxClick: 10.1, paste: 10.9, submit: 11.8,
   think: 11.9,
   p0: 13.9, p1: 15.9, p2: 17.9,            // a beat of thinking between each
-  stopHover: 18.8, stopClicks: [19.4, 19.8, 20.2],
-  box2Click: 20.8, typeStart: 21.2, typeEnd: 22.7, enter2: 23.0,
-  disrupt: 23.5, disable: 24.0,
-  panicStart: 24.3, panicClicks: [24.8, 25.2, 25.7, 26.1, 26.6],
-  p3: 27.0,
-  flicker: 28.0, collapse: 28.7, line: 29.2, dot: 29.5, black: 29.9,
-  end: 31.3,
+  esc1: 16.9,                              // one esc, a second after phase 1
+  escMany: [17.6, 17.78, 17.95, 18.13, 18.32],   // then a handful, fast
+  stopHover: 19.6, stopClicks: [20.2, 20.6, 21.0],
+  box2Click: 21.6, typeStart: 22.0, typeEnd: 23.5, enter2: 23.8,
+  disrupt: 24.3, disable: 24.8,
+  panicStart: 25.1, panicClicks: [25.6, 26.0, 26.5, 26.9, 27.4],
+  p3: 27.8,
+  flicker: 28.8, collapse: 30.0, line: 30.5, dot: 30.8, black: 31.2,
+  end: 32.6,
 };
 const TYPED = 'stop. STOP';
 
@@ -47,8 +49,8 @@ let acc = 0;
 const type = weights.map((w, i) => ({ t: +(M.typeStart + (acc += w * scale)).toFixed(4), c: TYPED[i] }));
 
 const events = [
-  { t: M.copy1, kind: 'key' }, { t: M.copy1 + 0.09, kind: 'key' },   // ctrl, c
-  { t: M.copy2, kind: 'key' }, { t: M.copy2 + 0.09, kind: 'key' },
+  { t: M.copy1, kind: 'key' },                                        // ctrl-c, once
+  { t: M.esc1, kind: 'key' }, ...M.escMany.map(t => ({ t, kind: 'key' })),
   { t: M.modelOpen, kind: 'mouse' }, { t: M.modelPick, kind: 'mouse' },
   { t: M.effortOpen, kind: 'mouse' }, { t: M.effortPick, kind: 'mouse' },
   { t: M.boxClick, kind: 'mouse' },

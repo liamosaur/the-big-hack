@@ -60,6 +60,8 @@ html,body{width:640px;height:360px;overflow:hidden;background:#000;
 #px .send.off.square i{background:#3f7a5e}
 #px .foot{position:absolute;left:22px;bottom:10px;font:11px/1 "Liberation Mono",monospace;color:#2c4a3c}
 
+#glitch{position:absolute;inset:0;z-index:7;display:none;overflow:hidden}
+#glitch div{position:absolute}
 #cur{position:absolute;z-index:9;display:none}
 #line{position:absolute;left:50%;top:50%;background:#fff;display:none;z-index:8;
   transform:translate(-50%,-50%);box-shadow:0 0 18px 4px rgba(255,255,255,.55)}
@@ -68,6 +70,7 @@ html,body{width:640px;height:360px;overflow:hidden;background:#000;
 <div id=screen>
   <div id=cc class=pane></div>
   <div id=px class=pane></div>
+  <div id=glitch></div>
   <svg id=cur width=16 height=22 viewBox="0 0 16 22"></svg>
 </div>
 <div id=line></div>
@@ -105,6 +108,34 @@ const rowY = i => MENU.top + MENU.pad + i * MENU.row + MENU.row / 2;
 const BOX = [200, 300], SEND = [597, 301];
 
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function hash(n){ const h = Math.sin(n * 127.1) * 43758.5453; return h - Math.floor(h); }
+
+// A card giving up: dropped tiles, wrong colours, torn bands. Deterministic
+// per frame, and some frames come through clean so it reads as intermittent.
+function glitch(f){
+  if (hash(f * 7.3) < 0.22) return '';
+  let html = '';
+  const n = 5 + Math.floor(hash(f * 3.1) * 10);
+  for (let i = 0; i < n; i++) {
+    const s = f * 100 + i, kind = hash(s * 6.7);
+    const y = Math.floor(hash(s * 2.3) * 360);
+    if (kind < 0.34) {                       // a tile that never got drawn
+      html += `<div style="left:${Math.floor(hash(s * 1.7) * 600)}px;top:${y}px;` +
+              `width:${16 + Math.floor(hash(s * 3.9) * 150)}px;height:${8 + Math.floor(hash(s * 5.1) * 60)}px;background:#000"></div>`;
+    } else if (kind < 0.68) {                // a block of wrong colour
+      const c = ['#ff00c8', '#00ffe1', '#2fe07a', '#ffffff', '#ff2d2d'][Math.floor(hash(s * 8.3) * 5)];
+      html += `<div style="left:${Math.floor(hash(s * 1.7) * 600)}px;top:${y}px;` +
+              `width:${24 + Math.floor(hash(s * 3.9) * 220)}px;height:${6 + Math.floor(hash(s * 5.1) * 40)}px;` +
+              `background:${c};mix-blend-mode:difference"></div>`;
+    } else {                                 // a scanline band, torn sideways
+      const c = ['#00ffe1', '#2fe07a', '#ffffff'][Math.floor(hash(s * 9.1) * 3)];
+      html += `<div style="left:0;top:${y}px;width:640px;height:${2 + Math.floor(hash(s * 4.4) * 9)}px;` +
+              `background:${c};opacity:.55;mix-blend-mode:screen;` +
+              `transform:translateX(${Math.floor((hash(s * 11.3) - 0.5) * 110)}px)"></div>`;
+    }
+  }
+  return html;
+}
 function ease(u){ return u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u); }
 function span(t, a, b){ return ease((t - a) / (b - a)); }
 function chars(text, t, a, cps){ return esc(text.slice(0, Math.max(0, Math.min(text.length, Math.floor((t - a) * cps))))); }
@@ -236,7 +267,7 @@ function render(t){
 
   const beam = before ? (t >= M.selStart - 0.45 && t <= M.copy2 + 0.3)
                       : (t < M.disable && inBox(COMP, p) && !inBox(SENDB, p));
-  if (p && t < M.collapse && !hidden(t)) {
+  if (p && t < M.flicker && !hidden(t)) {
     cur.style.display = 'block';
     cur.innerHTML = beam ? BEAM : ARROW;
     cur.style.left = (p[0] - (beam ? 8 : 0)) + 'px';
@@ -244,11 +275,14 @@ function render(t){
   } else cur.style.display = 'none';
 
   let filter = '', transform = '';
+  const gl = document.getElementById('glitch');
   if (t >= M.flicker && t < M.collapse) {
-    const n = Math.floor((t - M.flicker) * 22);
-    filter = `brightness(${[1, .35, 1.6, .6, 1, 1.9, .3, 1.1][n % 8]})`;
-    transform = `translateY(${[0, 2, -3, 0, 1, -2, 0, 3][n % 8]}px)`;
-  }
+    const f = Math.round(t * 24);
+    gl.style.display = 'block';
+    gl.innerHTML = glitch(f);
+    if (hash(f * 13.7) < 0.18) filter = 'invert(1) saturate(2.4)';
+    else if (hash(f * 17.9) < 0.14) filter = 'hue-rotate(140deg) contrast(2.2)';
+  } else { gl.style.display = 'none'; gl.innerHTML = ''; }
   if (t >= M.collapse && t < M.line) {
     const u = span(t, M.collapse, M.line);
     transform = `scaleY(${1 - u * 0.994})`;
