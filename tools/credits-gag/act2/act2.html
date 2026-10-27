@@ -90,6 +90,15 @@ const EFFORTS = ['Low', 'Medium', 'High', 'Max'];
 const M = S.marks, TYPE = S.type;
 
 // menu geometry, shared by the drawing and the pointer path
+const GLYPH = ['|', '/', '-', '\\'];
+const SEG = () => [[M.p0, PHASES[0], 60], [M.p1, PHASES[1], 60], [M.p2, PHASES[2], 60],
+                   [M.disrupt, DISRUPT, 70], [M.p3, PHASE3, 60]];
+const streaming = t => SEG().some(([at, txt, cps]) => t >= at && t < at + txt.length / cps);
+// the composer, so the pointer knows when it is over text rather than the button
+const COMP = { x0: 22, x1: 618, y0: 278, y1: 330 };
+const SENDB = { x0: 578, x1: 608, y0: 289, y1: 319 };
+const inBox = (b, p) => p && p[0] >= b.x0 && p[0] <= b.x1 && p[1] >= b.y0 && p[1] <= b.y1;
+
 const MENU = { top: 36, pad: 4, row: 22 };
 const MODEL_MENU_X = 372, EFFORT_MENU_X = 520;
 const rowY = i => MENU.top + MENU.pad + i * MENU.row + MENU.row / 2;
@@ -175,7 +184,6 @@ function harness(t, p){
 
   let body = '';
   if (t >= M.submit) body += `<div class=user>${esc(P)}</div>`;
-  if (t >= M.think && t < M.p0) body += `<div class=think>&gt; ${'.'.repeat(1 + Math.floor((t - M.think) * 6) % 3)}</div>`;
   let out = '';
   [[M.p0, PHASES[0]], [M.p1, PHASES[1]], [M.p2, PHASES[2]]].forEach(([at, text]) => {
     if (t >= at) out += `<div>${chars(text, t, at, 60)}</div>`;
@@ -183,6 +191,10 @@ function harness(t, p){
   if (t >= M.disrupt) out += `<div class=alarm>${chars(DISRUPT, t, M.disrupt, 70)}</div>`;
   if (t >= M.p3) out += `<div>${chars(PHASE3, t, M.p3, 60)}</div>`;
   if (out) body += `<div class=out>${out}</div>`;
+  if (t >= M.think && t < M.flicker && !streaming(t)) {
+    body += `<div class=think>${GLYPH[Math.floor(t * 8) % 4]} generating… ` +
+            `(${Math.floor(t - M.think)}s · esc to interrupt)</div>`;
+  }
 
   let comp = '<span class=ph>Ask anything</span>';
   if (t >= M.paste && t < M.submit) comp = esc(P);
@@ -222,7 +234,8 @@ function render(t){
     }
   } else px.innerHTML = harness(t, p);
 
-  const beam = before && t >= M.selStart - 0.45 && t <= M.copy2 + 0.3;
+  const beam = before ? (t >= M.selStart - 0.45 && t <= M.copy2 + 0.3)
+                      : (t < M.disable && inBox(COMP, p) && !inBox(SENDB, p));
   if (p && t < M.collapse && !hidden(t)) {
     cur.style.display = 'block';
     cur.innerHTML = beam ? BEAM : ARROW;

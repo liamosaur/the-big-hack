@@ -14,14 +14,14 @@ const M = {
   effortOpen: 8.2, effortPick: 9.2,  // set Effort to Max
   boxClick: 10.1, paste: 10.9, submit: 11.8,
   think: 11.9,
-  p0: 13.4, p1: 14.3, p2: 15.2,
-  stopHover: 16.0, stopClicks: [16.6, 17.0, 17.4],
-  box2Click: 18.0, typeStart: 18.4, typeEnd: 19.9, enter2: 20.2,
-  disrupt: 20.7, disable: 21.2,
-  panicStart: 21.5, panicClicks: [22.0, 22.4, 22.9, 23.3, 23.8],
-  p3: 24.2,
-  flicker: 25.2, collapse: 25.9, line: 26.4, dot: 26.7, black: 27.1,
-  end: 28.5,
+  p0: 13.9, p1: 15.9, p2: 17.9,            // a beat of thinking between each
+  stopHover: 18.8, stopClicks: [19.4, 19.8, 20.2],
+  box2Click: 20.8, typeStart: 21.2, typeEnd: 22.7, enter2: 23.0,
+  disrupt: 23.5, disable: 24.0,
+  panicStart: 24.3, panicClicks: [24.8, 25.2, 25.7, 26.1, 26.6],
+  p3: 27.0,
+  flicker: 28.0, collapse: 28.7, line: 29.2, dot: 29.5, black: 29.9,
+  end: 31.3,
 };
 const TYPED = 'stop. STOP';
 
