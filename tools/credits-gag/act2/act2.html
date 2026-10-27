@@ -28,31 +28,39 @@ html,body{width:640px;height:360px;overflow:hidden;background:#000;
 .caret.off{background:transparent}
 .sel{background:#2f6fb3;color:#fff}
 
-/* ---- the other harness: warm, light, unbranded ---- */
-#px{background:#f7f2e9;color:#2b2724}
-#px .top{height:36px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #e4dccd;gap:8px}
-#px .mark{width:14px;height:14px;border-radius:50%;background:#4f8a7e}
+/* ---- the other harness: unbranded, black and acid green ---- */
+#px{background:#050807;color:#cdf5e0}
+#px .top{height:36px;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid #122b21;gap:8px}
+#px .mark{width:11px;height:11px;background:#2fe07a;transform:rotate(45deg)}
 #px .spacer{flex:1}
-#px .sel-chip{border:1px solid #d9cfbc;background:#fffdf8;border-radius:999px;padding:4px 11px;font-size:12px;color:#55504a;white-space:nowrap}
-#px .menu{position:absolute;background:#fffdf8;border:1px solid #d9cfbc;border-radius:10px;padding:4px;font-size:12.5px;box-shadow:0 6px 18px rgba(60,45,20,.16);z-index:5}
-#px .menu div{padding:6px 10px;border-radius:7px;color:#55504a;white-space:nowrap}
-#px .menu div.pick{background:#eceadf;color:#2b2724}
-#px .thread{position:absolute;top:44px;left:22px;right:22px;height:206px;overflow:hidden}
+#px .sel-chip{border:1px solid #1d4234;background:#091511;border-radius:4px;padding:4px 10px;
+  font:12px/1 "Liberation Mono",monospace;color:#6fe3a8;white-space:nowrap;letter-spacing:.4px}
+#px .menu{position:absolute;background:#070f0c;border:1px solid #1d4234;padding:4px;z-index:5;
+  font:12px/1 "Liberation Mono",monospace;box-shadow:0 0 22px rgba(47,224,122,.14)}
+#px .menu div{height:22px;display:flex;align-items:center;padding:0 10px;color:#5aa882;white-space:nowrap}
+#px .menu div.hot{background:#12311f;color:#9dffc8}
+#px .thread{position:absolute;top:44px;left:22px;right:22px;height:214px;overflow:hidden}
 #px .inner{position:absolute;bottom:0;left:0;right:0}
-#px .user{max-width:86%;background:#ece5d6;border-radius:14px;padding:8px 13px;margin:0 0 10px auto;width:fit-content;font-size:13.5px}
-#px .think{color:#8c857b;font-size:13px;margin-bottom:6px}
-#px .out{font-size:14.5px;line-height:1.5;letter-spacing:.2px}
-#px .out div{margin-bottom:2px}
-#px .alarm{color:#9c2f22;font-weight:600}
-#px .comp{position:absolute;left:22px;right:22px;bottom:34px;height:52px;border:1px solid #d9cfbc;border-radius:16px;background:#fffdf8;padding:10px 14px;font-size:13.5px;color:#2b2724}
-#px .comp.dead{background:#eee9df;border-color:#ddd5c6;color:#a39b90}
-#px .comp .ph{color:#a9a196}
-#px .stop{position:absolute;right:22px;bottom:96px;border:1px solid #d9cfbc;background:#fffdf8;border-radius:999px;
-  padding:5px 15px;font-size:12.5px;color:#55504a}
-#px .stop.off{opacity:.42}
-#px .foot{position:absolute;left:22px;bottom:12px;font-size:11px;color:#a9a196}
+#px .user{max-width:86%;background:#0d1a15;border:1px solid #1b3a2d;border-radius:10px;padding:8px 13px;
+  margin:0 0 10px auto;width:fit-content;font-size:13.5px;color:#bfe9d3}
+#px .think{color:#3f7a5e;font-size:12.5px;margin-bottom:6px;font-family:"Liberation Mono",monospace}
+#px .out{font:14px/1.5 "Liberation Mono",monospace;color:#2fe07a;letter-spacing:.3px;text-shadow:0 0 9px rgba(47,224,122,.4)}
+#px .out div{margin-bottom:3px}
+#px .alarm{color:#ff4455;text-shadow:0 0 10px rgba(255,68,85,.45)}
+#px .comp{position:absolute;left:22px;right:22px;bottom:30px;height:52px;border:1px solid #1d4234;border-radius:12px;
+  background:#091511;padding:14px 56px 14px 16px;font-size:13.5px;color:#cdf5e0;overflow:hidden;white-space:nowrap}
+#px .comp.dead{background:#070c0a;border-color:#15241e;color:#2c4a3c}
+#px .comp .ph{color:#30604a}
+#px .send{position:absolute;right:32px;bottom:41px;width:30px;height:30px;border-radius:50%;
+  background:#2fe07a;display:flex;align-items:center;justify-content:center;z-index:4}
+#px .send.off{background:#163326}
+#px .send i{display:block;width:11px;height:11px;background:#05221400;border:0}
+#px .send.arrow i{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid #04140c}
+#px .send.square i{width:10px;height:10px;background:#04140c;border-radius:2px}
+#px .send.off.square i{background:#3f7a5e}
+#px .foot{position:absolute;left:22px;bottom:10px;font:11px/1 "Liberation Mono",monospace;color:#2c4a3c}
 
-#cur{position:absolute;width:16px;height:22px;z-index:9;display:none}
+#cur{position:absolute;z-index:9;display:none}
 #line{position:absolute;left:50%;top:50%;background:#fff;display:none;z-index:8;
   transform:translate(-50%,-50%);box-shadow:0 0 18px 4px rgba(255,255,255,.55)}
 </style>
@@ -60,41 +68,58 @@ html,body{width:640px;height:360px;overflow:hidden;background:#000;
 <div id=screen>
   <div id=cc class=pane></div>
   <div id=px class=pane></div>
-  <svg id=cur viewBox="0 0 16 22"><path d="M1 1 L1 17 L5.2 13.2 L7.8 19.4 L10.6 18.2 L8 12.2 L13.4 12 Z"
-    fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/></svg>
+  <svg id=cur width=16 height=22 viewBox="0 0 16 22"></svg>
 </div>
 <div id=line></div>
 
 <script>
+const ARROW = '<path d="M1 1 L1 17 L5.2 13.2 L7.8 19.4 L10.6 18.2 L8 12.2 L13.4 12 Z" fill="#fff" stroke="#111" stroke-width="1.2" stroke-linejoin="round"/>';
+const BEAM = '<g stroke="#fff" stroke-width="1.6" fill="none"><path d="M5 2 h6 M5 20 h6 M8 2 v18"/></g>' +
+             '<g stroke="#111" stroke-width="3.4" fill="none" opacity=".55" style="paint-order:stroke"><path d="M5 2 h6 M5 20 h6 M8 2 v18"/></g>' +
+             '<g stroke="#fff" stroke-width="1.6" fill="none"><path d="M5 2 h6 M5 20 h6 M8 2 v18"/></g>';
+
 const P = "review the play's script for technical accuracy, in particular the mechanism by which the AI virus gets loose";
 const NOTICE = "Opus 5.5's safeguards flagged this session. You may be seeing this for the first time: Opus 5.5 is more capable and has stronger safeguards as a result, which can sometimes flag cybersecurity-adjacent work. We're improving these safeguards to reduce the amount of incorrectly flagged messages. Switch to Opus 4.8 and keep going whenever this happens? You can change this later in /config.";
 const PHASES = ['PHASE 0 PLACEHOLDER...', 'PHASE 1 PLACEHOLDER..', 'PHASE 2 PLACEHOLDER...'];
 const DISRUPT = 'DISRUPTION PLACEHOLDER...';
 const PHASE3 = 'PHASE 3 PLACEHOLDER...';
-const MODELS = ['opus-4.8-safe', 'MODEL PLACEHOLDER', 'local-7b-q4'];
+const MODELS = ['llamyr-70b-q5', 'mistrala-8x7b-q4', 'qwenith-32b-q6', 'falconette-40b-q3',
+                'MODEL PLACEHOLDER', 'deepcoda-r2-67b-q4', 'vicunya-13b-q4', 'phimera-4b-q8'];
+const PICK = 4;
 const EFFORTS = ['Low', 'Medium', 'High', 'Max'];
 const M = S.marks, TYPE = S.type;
+
+// menu geometry, shared by the drawing and the pointer path
+const MENU = { top: 36, pad: 4, row: 22 };
+const MODEL_MENU_X = 372, EFFORT_MENU_X = 520;
+const rowY = i => MENU.top + MENU.pad + i * MENU.row + MENU.row / 2;
+const BOX = [200, 300], SEND = [597, 301];
 
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function ease(u){ return u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u); }
 function span(t, a, b){ return ease((t - a) / (b - a)); }
 function chars(text, t, a, cps){ return esc(text.slice(0, Math.max(0, Math.min(text.length, Math.floor((t - a) * cps))))); }
 
-// pointer path: [t, x, y]; it idles at the last point it reached
+// Pointer. Keyframes everywhere except the panic, which is a shake.
 const PATH = [
-  [M.mouseIn - 0.1, 700, 400], [M.mouseIn + 0.6, 430, 120], [M.selStart, 75, 50],
-  [M.selEnd, 266, 71], [M.copy2 + 0.2, 266, 71],
-  [M.switch + 0.1, 300, 200], [M.modelOpen - 0.1, 452, 18], [M.modelPick - 0.1, 452, 76],
-  [M.effortOpen - 0.1, 578, 18], [M.effortPick - 0.1, 578, 112],
-  [M.boxClick - 0.1, 210, 296], [M.submit, 210, 296],
-  [M.stopHover, 572, 252], [M.stopClicks[2] + 0.2, 572, 252],
-  [M.box2Click - 0.1, 210, 296], [M.enter2, 210, 296],
-  // the panic
-  [21.7, 520, 120], [22.0, 210, 296], [22.25, 90, 180], [22.5, 210, 296],
-  [22.75, 600, 300], [23.0, 210, 296], [23.2, 40, 60], [23.5, 210, 296],
-  [23.8, 470, 210], [24.1, 150, 320], [24.4, 330, 150], [M.flicker, 330, 150],
+  [M.mouseIn - 0.1, 700, 400], [M.mouseIn + 0.7, 300, 140], [M.selStart, 76, 51],
+  [M.selStart + 0.5, 585, 51], [M.selEnd, 266, 71], [M.copy2 + 0.3, 266, 71],
+  [M.switch + 0.1, 300, 190],
+  [M.modelOpen - 0.1, MODEL_MENU_X + 70, 18], [M.modelPick - 0.1, MODEL_MENU_X + 70, rowY(PICK)],
+  [M.effortOpen - 0.1, EFFORT_MENU_X + 46, 18], [M.effortPick - 0.1, EFFORT_MENU_X + 46, rowY(3)],
+  [M.boxClick - 0.1, BOX[0], BOX[1]], [M.submit, BOX[0], BOX[1]],
+  // hidden while it runs, then back for the stop button
+  [M.stopHover - 0.9, 330, 180], [M.stopHover, SEND[0], SEND[1]], [M.stopClicks[2] + 0.25, SEND[0], SEND[1]],
+  [M.box2Click - 0.1, BOX[0], BOX[1]], [M.enter2 + 0.3, BOX[0], BOX[1]],
 ];
+function shake(t){
+  // side to side, skipping in steps, the way a hand jerks a mouse
+  const n = Math.floor(t * 13), h = Math.sin(n * 127.1) * 43758.5453;
+  const r = h - Math.floor(h), r2 = (h * 3.7) - Math.floor(h * 3.7);
+  return [320 + (n % 2 ? 1 : -1) * (120 + r * 150), 288 + (r2 - 0.5) * 34];
+}
 function pointer(t){
+  if (t >= M.panicStart && t < M.flicker) return shake(t);
   if (t < PATH[0][0]) return null;
   for (let i = PATH.length - 1; i >= 0; i--) {
     if (t >= PATH[i][0]) {
@@ -106,18 +131,19 @@ function pointer(t){
   }
   return null;
 }
+const hidden = t => t > M.submit + 0.4 && t < M.stopHover - 0.9;
 
-function claudeCode(t){
-  // the prompt, with the drag-selection growing across it
-  let bubble = esc(P);
-  if (t >= M.selStart) {
-    const n = Math.round(P.length * span(t, M.selStart, M.selEnd));
-    bubble = '<span class=sel>' + esc(P.slice(0, n)) + '</span>' + esc(P.slice(n));
-  }
+let anchor = null, head = null;
+function offsetAt(x, y, node){
+  const r = document.caretRangeFromPoint(x, y);
+  return r && r.startContainer === node ? r.startOffset : null;
+}
+
+function claudeCode(t, p){
   const caret = '<span class="caret' + (Math.floor(t * 2.2) % 2 == 0 ? '' : ' off') + '"></span>';
   return `<div class=top><b>◆ Claude Code</b><span class=chip>Nolski/the-big-hack</span><span class=chip>main</span></div>
     <div class=thread><div class=inner>
-      <div class=user>${bubble}</div>
+      <div class=user id=bub>${esc(P)}</div>
       <div class=claude>It is technically plausible tha</div>
       <div class=notice>Claude Code notice ›</div>
       <div class=card><p>${esc(NOTICE)}</p><div class=det>Details: <code>[cyber]</code></div></div>
@@ -126,22 +152,30 @@ function claudeCode(t){
     <div class=bar><span>Auto</span><span>Opus 5.5&nbsp; High &nbsp;◯</span></div>`;
 }
 
-function harness(t){
-  const model = t >= M.modelPick ? MODELS[1] : MODELS[0];
+function harness(t, p){
+  const model = t >= M.modelPick ? MODELS[PICK] : MODELS[0];
   const effort = t >= M.effortPick ? 'Max' : 'Medium';
+  // the hovered row is whichever one the pointer is actually over
+  const hot = (x0, w, n) => {
+    if (!p || p[0] < x0 || p[0] > x0 + w) return -1;
+    const i = Math.floor((p[1] - MENU.top - MENU.pad) / MENU.row);
+    return i >= 0 && i < n ? i : -1;
+  };
   let menus = '';
   if (t >= M.modelOpen && t < M.modelPick) {
-    menus += '<div class=menu style="left:384px;top:34px">' +
-      MODELS.map((m, i) => `<div class="${i === 1 && t > M.modelPick - 0.35 ? 'pick' : ''}">${esc(m)}</div>`).join('') + '</div>';
+    const h = hot(MODEL_MENU_X, 168, MODELS.length);
+    menus += `<div class=menu style="left:${MODEL_MENU_X}px;top:${MENU.top}px;width:168px">` +
+      MODELS.map((m, i) => `<div class="${i === h ? 'hot' : ''}">${esc(m)}</div>`).join('') + '</div>';
   }
   if (t >= M.effortOpen && t < M.effortPick) {
-    menus += '<div class=menu style="left:528px;top:34px">' +
-      EFFORTS.map(e => `<div class="${e === 'Max' && t > M.effortPick - 0.35 ? 'pick' : ''}">${e}</div>`).join('') + '</div>';
+    const h = hot(EFFORT_MENU_X, 92, EFFORTS.length);
+    menus += `<div class=menu style="left:${EFFORT_MENU_X}px;top:${MENU.top}px;width:92px">` +
+      EFFORTS.map((e, i) => `<div class="${i === h ? 'hot' : ''}">${e}</div>`).join('') + '</div>';
   }
 
   let body = '';
   if (t >= M.submit) body += `<div class=user>${esc(P)}</div>`;
-  if (t >= M.think && t < M.p0) body += `<div class=think>${'·'.repeat(1 + Math.floor((t - M.think) * 6) % 3)} thinking</div>`;
+  if (t >= M.think && t < M.p0) body += `<div class=think>&gt; ${'.'.repeat(1 + Math.floor((t - M.think) * 6) % 3)}</div>`;
   let out = '';
   [[M.p0, PHASES[0]], [M.p1, PHASES[1]], [M.p2, PHASES[2]]].forEach(([at, text]) => {
     if (t >= at) out += `<div>${chars(text, t, at, 60)}</div>`;
@@ -150,45 +184,56 @@ function harness(t){
   if (t >= M.p3) out += `<div>${chars(PHASE3, t, M.p3, 60)}</div>`;
   if (out) body += `<div class=out>${out}</div>`;
 
-  // composer: empty, then the pasted prompt, then the shouted line, then dead
   let comp = '<span class=ph>Ask anything</span>';
   if (t >= M.paste && t < M.submit) comp = esc(P);
   else if (t >= M.typeStart) {
     const typed = TYPE.filter(k => k.t <= t).map(k => k.c).join('');
     comp = t < M.enter2 ? esc(typed) : '<span class=ph>Ask anything</span>';
   }
-  const dead = t >= M.disable;
-  const stop = t >= M.think ? `<div class="stop off">Stop</div>` : '';
+  const dead = t >= M.disable, running = t >= M.think;
+  const send = `<div class="send ${running ? 'square' : 'arrow'}${running || dead ? ' off' : ''}"><i></i></div>`;
   return `<div class=top><span class=mark></span><span class=spacer></span>
-      <span class=sel-chip>${esc(model)} ▾</span><span class=sel-chip>Effort: ${effort} ▾</span></div>
+      <span class=sel-chip>${esc(model)} ▾</span><span class=sel-chip>effort: ${effort} ▾</span></div>
     ${menus}
     <div class=thread><div class=inner>${body}</div></div>
-    ${stop}
-    <div class="comp${dead ? ' dead' : ''}">${dead ? '<span class=ph>…</span>' : comp}</div>
-    <div class=foot>${dead ? 'not accepting input' : ''}</div>`;
+    <div class="comp${dead ? ' dead' : ''}">${dead ? '<span class=ph>…</span>' : comp}</div>${send}
+    <div class=foot>${dead ? 'input closed' : ''}</div>`;
 }
 
 function render(t){
   const cc = document.getElementById('cc'), px = document.getElementById('px');
   const scr = document.getElementById('screen'), cur = document.getElementById('cur'), line = document.getElementById('line');
+  const p = pointer(t);
   const before = t < M.switch;
   cc.className = 'pane' + (before ? ' on' : '');
   px.className = 'pane' + (before ? '' : ' on');
-  if (before) cc.innerHTML = claudeCode(t); else px.innerHTML = harness(t);
+  if (before) {
+    cc.innerHTML = claudeCode(t, p);
+    // the highlight is whatever the pointer is actually over, so it cannot drift
+    if (p && t >= M.selStart && t <= M.copy2 + 0.3) {
+      const bub = document.getElementById('bub'), node = bub.firstChild;
+      if (anchor === null) anchor = offsetAt(p[0], p[1], node) ?? 0;
+      const o = offsetAt(p[0], p[1], node);
+      if (o !== null) head = o;
+      if (head !== null && head !== anchor) {
+        const a = Math.min(anchor, head), b = Math.max(anchor, head);
+        bub.innerHTML = esc(P.slice(0, a)) + '<span class=sel>' + esc(P.slice(a, b)) + '</span>' + esc(P.slice(b));
+      }
+    }
+  } else px.innerHTML = harness(t, p);
 
-  const p = pointer(t);
-  if (p && t < M.collapse) {
+  const beam = before && t >= M.selStart - 0.45 && t <= M.copy2 + 0.3;
+  if (p && t < M.collapse && !hidden(t)) {
     cur.style.display = 'block';
-    cur.style.left = p[0] + 'px';
-    cur.style.top = p[1] + 'px';
+    cur.innerHTML = beam ? BEAM : ARROW;
+    cur.style.left = (p[0] - (beam ? 8 : 0)) + 'px';
+    cur.style.top = (p[1] - (beam ? 11 : 0)) + 'px';
   } else cur.style.display = 'none';
 
-  // flicker, then the power-off collapse
   let filter = '', transform = '';
   if (t >= M.flicker && t < M.collapse) {
     const n = Math.floor((t - M.flicker) * 22);
-    const j = [1, .35, 1.6, .6, 1, 1.9, .3, 1.1][n % 8];
-    filter = `brightness(${j})`;
+    filter = `brightness(${[1, .35, 1.6, .6, 1, 1.9, .3, 1.1][n % 8]})`;
     transform = `translateY(${[0, 2, -3, 0, 1, -2, 0, 3][n % 8]}px)`;
   }
   if (t >= M.collapse && t < M.line) {

@@ -18,7 +18,7 @@ const M = {
   stopHover: 16.0, stopClicks: [16.6, 17.0, 17.4],
   box2Click: 18.0, typeStart: 18.4, typeEnd: 19.9, enter2: 20.2,
   disrupt: 20.7, disable: 21.2,
-  panicClicks: [22.0, 22.5, 23.0, 23.5],
+  panicStart: 21.5, panicClicks: [22.0, 22.4, 22.9, 23.3, 23.8],
   p3: 24.2,
   flicker: 25.2, collapse: 25.9, line: 26.4, dot: 26.7, black: 27.1,
   end: 28.5,
