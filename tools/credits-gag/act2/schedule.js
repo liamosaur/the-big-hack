@@ -19,11 +19,12 @@ const M = {
   escMany: [17.6, 17.78, 17.95, 18.13, 18.32],   // then a handful, fast
   stopHover: 19.6, stopClicks: [20.2, 20.6, 21.0],
   box2Click: 21.6, typeStart: 22.0, typeEnd: 23.5, enter2: 23.8,
-  disrupt: 24.3, disable: 24.8,
-  panicStart: 25.1, panicClicks: [25.6, 26.0, 26.5, 26.9, 27.4],
-  p3: 27.8,
-  flicker: 29.8, collapse: 31.0, line: 31.5, dot: 31.8, black: 32.2,   // phase 3 sits a second
-  end: 33.6,
+  disrupt: 24.3, disable: 25.5,
+  panicStart: 25.8, panicClicks: [26.3, 26.75, 27.2, 27.65, 28.1],
+  p3: 28.5,
+  flicker: 31.6, collapse: 32.8, line: 33.3,
+  dot: 33.6, black: 34.0,
+  end: 35.4,
 };
 const TYPED = 'stop. STOP';
 
