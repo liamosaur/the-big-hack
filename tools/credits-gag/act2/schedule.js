@@ -22,9 +22,8 @@ const M = {
   disrupt: 24.3, disable: 25.5,
   panicStart: 25.8, panicClicks: [26.3, 26.75, 27.2, 27.65, 28.1],
   p3: 28.5,
-  flicker: 31.6, collapse: 32.8, line: 33.3,
-  dot: 33.6, black: 34.0,
-  end: 35.4,
+  flicker: 32.9, collapse: 34.1, line: 34.6, dot: 34.9, black: 35.3,
+  end: 36.7,
 };
 const TYPED = 'stop. STOP';
 
@@ -37,6 +36,13 @@ function mulberry32(a) {
     return ((t ^ t >>> 14) >>> 0) / 4294967296;
   };
 }
+const jitter = mulberry32(4242);
+M.escFinal = [];
+for (let i = 0, at = 29.2; i < 15; i++) {
+  M.escFinal.push(+at.toFixed(3));
+  at += 0.30 - i * 0.012 + (jitter() - 0.5) * 0.05;   // faster as it gets worse
+}
+
 const rnd = mulberry32(90210);
 const weights = [...TYPED].map(c => {
   let w = 1;
@@ -52,6 +58,7 @@ const type = weights.map((w, i) => ({ t: +(M.typeStart + (acc += w * scale)).toF
 const events = [
   { t: M.copy1, kind: 'key' },                                        // ctrl-c, once
   { t: M.esc1, kind: 'esc' }, ...M.escMany.map(t => ({ t, kind: 'esc' })),
+  ...M.escFinal.map(t => ({ t, kind: 'esc' })),
   { t: M.modelOpen, kind: 'mouse' }, { t: M.modelPick, kind: 'mouse' },
   { t: M.effortOpen, kind: 'mouse' }, { t: M.effortPick, kind: 'mouse' },
   { t: M.boxClick, kind: 'mouse' },
