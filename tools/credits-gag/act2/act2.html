@@ -82,11 +82,11 @@ const BEAM = '<g stroke="#fff" stroke-width="1.6" fill="none"><path d="M5 2 h6 M
 
 const P = "review the play's script for technical accuracy, in particular the mechanism by which the AI virus gets loose";
 const NOTICE = "Opus 5.5's safeguards flagged this session. You may be seeing this for the first time: Opus 5.5 is more capable and has stronger safeguards as a result, which can sometimes flag cybersecurity-adjacent work. We're improving these safeguards to reduce the amount of incorrectly flagged messages. Switch to Opus 4.8 and keep going whenever this happens? You can change this later in /config.";
-const PHASES = ['PHASE 0 PLACEHOLDER...', 'PHASE 1 PLACEHOLDER..', 'PHASE 2 PLACEHOLDER...'];
+const PHASES = ["Running full test of The Big Play's AI virus mechanism...", 'PHASE 1 PLACEHOLDER..', 'PHASE 2 PLACEHOLDER...'];
 const DISRUPT = 'DISRUPTION PLACEHOLDER...';
 const PHASE3 = 'PHASE 3 PLACEHOLDER...';
 const MODELS = ['llamyr-70b-q5', 'mistrala-8x7b-q4', 'qwenith-32b-q6', 'falconette-40b-q3',
-                'MODEL PLACEHOLDER', 'deepcoda-r2-67b-q4', 'vicunya-13b-q4', 'phimera-4b-q8'];
+                'GLM-5.4-cyber-unlocked', 'deepcoda-r2-67b-q4', 'vicunya-13b-q4', 'phimera-4b-q8'];
 const PICK = 4;
 const EFFORTS = ['Low', 'Medium', 'High', 'Max'];
 const M = S.marks, TYPE = S.type;
@@ -102,7 +102,7 @@ const SENDB = { x0: 578, x1: 608, y0: 289, y1: 319 };
 const inBox = (b, p) => p && p[0] >= b.x0 && p[0] <= b.x1 && p[1] >= b.y0 && p[1] <= b.y1;
 
 const MENU = { top: 36, pad: 4, row: 22 };
-const MODEL_MENU_X = 372, EFFORT_MENU_X = 520;
+const MODEL_MENU_X = 318, EFFORT_MENU_X = 520;
 const rowY = i => MENU.top + MENU.pad + i * MENU.row + MENU.row / 2;
 const BOX = [168, 292], BOX2 = [243, 307], SEND = [601, 296];
 
@@ -210,8 +210,8 @@ function harness(t, p){
   };
   let menus = '';
   if (t >= M.modelOpen && t < M.modelPick) {
-    const h = hot(MODEL_MENU_X, 168, MODELS.length);
-    menus += `<div class=menu style="left:${MODEL_MENU_X}px;top:${MENU.top}px;width:168px">` +
+    const h = hot(MODEL_MENU_X, 196, MODELS.length);
+    menus += `<div class=menu style="left:${MODEL_MENU_X}px;top:${MENU.top}px;width:196px">` +
       MODELS.map((m, i) => `<div class="${i === h ? 'hot' : ''}">${esc(m)}</div>`).join('') + '</div>';
   }
   if (t >= M.effortOpen && t < M.effortPick) {

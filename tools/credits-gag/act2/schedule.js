@@ -22,8 +22,8 @@ const M = {
   disrupt: 24.3, disable: 24.8,
   panicStart: 25.1, panicClicks: [25.6, 26.0, 26.5, 26.9, 27.4],
   p3: 27.8,
-  flicker: 28.8, collapse: 30.0, line: 30.5, dot: 30.8, black: 31.2,
-  end: 32.6,
+  flicker: 29.8, collapse: 31.0, line: 31.5, dot: 31.8, black: 32.2,   // phase 3 sits a second
+  end: 33.6,
 };
 const TYPED = 'stop. STOP';
 
